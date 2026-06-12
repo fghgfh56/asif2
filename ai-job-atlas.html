@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Job Atlas — Where to Find Fresher AI/ML/DL Jobs in 48 Countries</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0B1426; --navy2: #111d35; --navy3: #172440;
+    --border: #1e3158; --teal: #14B8A6; --blue: #3B82F6;
+    --amber: #F59E0B; --green: #22c55e;
+    --text: #F0F4FF; --muted: #8ba3c7; --card: #0f1e38;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(11,20,38,0.93); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 58px;
+  }
+  .brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; }
+  .brand span { color: var(--teal); }
+  .nav-meta { font-size: .78rem; color: var(--muted); }
+
+  .hero { padding: 3.5rem 2rem 2.5rem; text-align: center; position: relative; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20,184,166,0.1), transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.9rem, 4.5vw, 3.1rem); font-weight: 700; line-height: 1.15;
+    max-width: 760px; margin: 0 auto .9rem;
+  }
+  .hero h1 .accent { color: var(--teal); }
+  .hero p { color: var(--muted); font-size: 1rem; max-width: 580px; margin: 0 auto 1.8rem; }
+
+  .controls { max-width: 760px; margin: 0 auto 1.4rem; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .search-input {
+    flex: 1; min-width: 240px;
+    background: var(--navy3); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 16px; color: var(--text); font-size: .92rem;
+    outline: none; font-family: 'Inter', sans-serif;
+  }
+  .search-input:focus { border-color: var(--teal); }
+  .search-input::placeholder { color: var(--muted); }
+
+  .region-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    background: var(--navy3); border: 1px solid var(--border); border-radius: 20px;
+    padding: 5px 14px; font-size: .8rem; color: var(--muted); cursor: pointer; transition: all .2s;
+  }
+  .chip:hover { border-color: var(--teal); color: var(--text); }
+  .chip.active { border-color: var(--teal); color: var(--teal); background: rgba(20,184,166,0.08); }
+
+  .wrap { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+
+  .global-card {
+    background: linear-gradient(135deg, rgba(20,184,166,0.08), var(--card));
+    border: 1px solid rgba(20,184,166,0.35); border-radius: 14px;
+    padding: 1.4rem 1.5rem; margin-bottom: 1.6rem;
+  }
+  .global-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; margin-bottom: .35rem; }
+  .global-card .sub { font-size: .82rem; color: var(--muted); margin-bottom: 1rem; }
+
+  .board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+  .board-link {
+    display: flex; flex-direction: column; gap: 2px;
+    background: var(--navy3); border: 1px solid var(--border); border-radius: 9px;
+    padding: 9px 13px; text-decoration: none; transition: border-color .2s, transform .15s;
+  }
+  .board-link:hover { border-color: var(--teal); transform: translateY(-1px); }
+  .board-link .bn { font-size: .86rem; font-weight: 600; color: var(--text); }
+  .board-link .bt { font-size: .7rem; color: var(--muted); }
+  .bt .tag { color: var(--teal); }
+  .bt .tag.visa { color: var(--green); }
+  .bt .tag.official { color: var(--amber); }
+  .bt .tag.fresher { color: var(--blue); }
+
+  details.country {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    margin-bottom: 10px; overflow: hidden;
+  }
+  details.country[open] { border-color: var(--teal); }
+  summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px; font-weight: 600; font-size: .95rem;
+    transition: background .2s;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { background: var(--navy2); }
+  summary .flag { font-size: 1.3rem; }
+  summary .region-tag { margin-left: auto; font-size: .7rem; color: var(--muted); font-weight: 400; }
+  summary .arrow { color: var(--muted); font-size: .8rem; transition: transform .2s; }
+  details[open] summary .arrow { transform: rotate(90deg); }
+
+  .country-body { padding: 0 18px 16px; }
+  .quick-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .quick-link {
+    font-size: .73rem; padding: 5px 11px; border-radius: 6px;
+    background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.35);
+    color: var(--blue); text-decoration: none; font-weight: 600; transition: filter .2s;
+  }
+  .quick-link:hover { filter: brightness(1.3); }
+  .quick-label { font-size: .72rem; color: var(--muted); width: 100%; margin-bottom: 2px; }
+
+  .tip-box {
+    background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 12px; padding: 1.1rem 1.3rem; margin: 1.6rem 0;
+    font-size: .85rem; color: var(--muted); line-height: 1.7;
+  }
+  .tip-box strong { color: var(--amber); }
+  .tip-box code {
+    background: var(--navy3); padding: 2px 7px; border-radius: 5px;
+    font-size: .78rem; color: var(--text);
+  }
+
+  footer { text-align: center; padding: 2.5rem; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--border); }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    .wrap { padding: 1rem 1rem 3rem; }
+    .board-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">AI Job <span>Atlas</span></div>
+  <div class="nav-meta">48 countries · fresher AI/ML/DL/RAG</div>
+</nav>
+
+<section class="hero">
+  <h1>Where to Find Your First <span class="accent">AI Job</span> — Country by Country</h1>
+  <p>A curated map of the real job boards in 48 countries for entry-level AI, ML, Deep Learning and RAG/LLM roles. No middleman — search directly at the source.</p>
+  <div class="controls">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search a country… e.g. Japan, Germany, Brazil" />
+  </div>
+  <div class="region-chips" id="regionChips">
+    <div class="chip active" data-r="">All</div>
+    <div class="chip" data-r="europe">Europe</div>
+    <div class="chip" data-r="asia">Asia</div>
+    <div class="chip" data-r="americas">Americas</div>
+    <div class="chip" data-r="mideast">Middle East</div>
+    <div class="chip" data-r="africa">Africa</div>
+    <div class="chip" data-r="oceania">Oceania</div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <div class="global-card">
+    <h2>🌍 Global &amp; Remote — start here, works for every country</h2>
+    <div class="sub">AI-specific and remote-first boards. These cover all 48 countries below.</div>
+    <div class="board-grid" id="globalBoards"></div>
+  </div>
+
+  <div class="tip-box">
+    <strong>🔎 Search hack:</strong> companies host jobs on ATS platforms you can Google directly. Try:
+    <code>site:boards.greenhouse.io "machine learning" junior</code> &nbsp;or&nbsp;
+    <code>site:jobs.lever.co "AI engineer" graduate</code> &nbsp;or&nbsp;
+    <code>site:jobs.ashbyhq.com LLM intern</code>.
+    Add a country name to localize. This surfaces roles before they hit the big boards.
+  </div>
+
+  <div id="countryList"></div>
+
+</div>
+
+<footer>
+  <strong style="color:var(--text)">AI Job Atlas</strong> · Team: Habib · Mahin · Rakib · © 2026<br>
+  Links curated Jan 2026 — if one is dead, the board likely rebranded; search its name.
+</footer>
+
+<script>
+/* Tags: official = government portal · tech = tech-focused · fresher = entry-level friendly · visa = visa/relocation info */
+const GLOBAL_BOARDS = [
+  { n: 'LinkedIn Jobs', u: 'https://www.linkedin.com/jobs/', t: ['general'] },
+  { n: 'aijobs.net', u: 'https://aijobs.net', t: ['tech'] },
+  { n: 'Wellfound (AngelList)', u: 'https://wellfound.com', t: ['tech'] },
+  { n: 'RemoteOK', u: 'https://remoteok.com', t: ['tech'] },
+  { n: 'WeWorkRemotely', u: 'https://weworkremotely.com', t: ['tech'] },
+  { n: 'HN Who\'s Hiring', u: 'https://news.ycombinator.com/jobs', t: ['tech'] },
+  { n: 'Relocate.me', u: 'https://relocate.me', t: ['visa'] },
+  { n: 'Prosple (graduates)', u: 'https://prosple.com', t: ['fresher'] },
+  { n: 'Glassdoor', u: 'https://www.glassdoor.com', t: ['general'] },
+  { n: 'Otta', u: 'https://otta.com', t: ['tech'] }
+];
+
+const COUNTRIES = [
+  /* ── EUROPE ── */
+  { f:'🇩🇪', n:'Germany', r:'europe', li:'Germany', boards:[
+    { n:'StepStone', u:'https://www.stepstone.de', t:['general'] },
+    { n:'Arbeitnow', u:'https://www.arbeitnow.com', t:['tech','visa'] },
+    { n:'Make it in Germany', u:'https://www.make-it-in-germany.com', t:['official','visa'] },
+    { n:'Berlin Startup Jobs', u:'https://berlinstartupjobs.com', t:['tech'] },
+    { n:'Honeypot', u:'https://www.honeypot.io', t:['tech','visa'] },
+    { n:'Indeed DE', u:'https://de.indeed.com', t:['general'] } ]},
+  { f:'🇬🇧', n:'United Kingdom', r:'europe', li:'United Kingdom', boards:[
+    { n:'Reed', u:'https://www.reed.co.uk', t:['general'] },
+    { n:'Totaljobs', u:'https://www.totaljobs.com', t:['general'] },
+    { n:'CWJobs', u:'https://www.cwjobs.co.uk', t:['tech'] },
+    { n:'Otta', u:'https://otta.com', t:['tech'] },
+    { n:'Gradcracker', u:'https://www.gradcracker.com', t:['fresher'] },
+    { n:'Indeed UK', u:'https://uk.indeed.com', t:['general'] } ]},
+  { f:'🇳🇱', n:'Netherlands', r:'europe', li:'Netherlands', boards:[
+    { n:'IamExpat Jobs', u:'https://www.iamexpat.nl/career/jobs-netherlands', t:['visa'] },
+    { n:'Undutchables', u:'https://undutchables.nl', t:['visa'] },
+    { n:'Indeed NL', u:'https://nl.indeed.com', t:['general'] },
+    { n:'Honeypot', u:'https://www.honeypot.io', t:['tech','visa'] } ]},
+  { f:'🇫🇷', n:'France', r:'europe', li:'France', boards:[
+    { n:'Welcome to the Jungle', u:'https://www.welcometothejungle.com', t:['tech'] },
+    { n:'Apec', u:'https://www.apec.fr', t:['general'] },
+    { n:'France Travail', u:'https://www.francetravail.fr', t:['official'] },
+    { n:'Indeed FR', u:'https://fr.indeed.com', t:['general'] } ]},
+  { f:'🇨🇭', n:'Switzerland', r:'europe', li:'Switzerland', boards:[
+    { n:'jobs.ch', u:'https://www.jobs.ch', t:['general'] },
+    { n:'SwissDevJobs', u:'https://swissdevjobs.ch', t:['tech'] },
+    { n:'jobup.ch', u:'https://www.jobup.ch', t:['general'] } ]},
+  { f:'🇸🇪', n:'Sweden', r:'europe', li:'Sweden', boards:[
+    { n:'Arbetsförmedlingen', u:'https://arbetsformedlingen.se', t:['official'] },
+    { n:'The Hub (Nordics)', u:'https://thehub.io', t:['tech'] },
+    { n:'Indeed SE', u:'https://se.indeed.com', t:['general'] } ]},
+  { f:'🇮🇪', n:'Ireland', r:'europe', li:'Ireland', boards:[
+    { n:'IrishJobs', u:'https://www.irishjobs.ie', t:['general'] },
+    { n:'Jobs.ie', u:'https://www.jobs.ie', t:['general'] },
+    { n:'Indeed IE', u:'https://ie.indeed.com', t:['general'] },
+    { n:'GradIreland', u:'https://gradireland.com', t:['fresher'] } ]},
+  { f:'🇪🇸', n:'Spain', r:'europe', li:'Spain', boards:[
+    { n:'InfoJobs', u:'https://www.infojobs.net', t:['general'] },
+    { n:'Tecnoempleo', u:'https://www.tecnoempleo.com', t:['tech'] },
+    { n:'Indeed ES', u:'https://es.indeed.com', t:['general'] } ]},
+  { f:'🇮🇹', n:'Italy', r:'europe', li:'Italy', boards:[
+    { n:'InfoJobs IT', u:'https://www.infojobs.it', t:['general'] },
+    { n:'Indeed IT', u:'https://it.indeed.com', t:['general'] },
+    { n:'Monster IT', u:'https://www.monster.it', t:['general'] } ]},
+  { f:'🇵🇱', n:'Poland', r:'europe', li:'Poland', boards:[
+    { n:'JustJoin.it', u:'https://justjoin.it', t:['tech'] },
+    { n:'NoFluffJobs', u:'https://nofluffjobs.com', t:['tech'] },
+    { n:'Pracuj.pl', u:'https://www.pracuj.pl', t:['general'] } ]},
+  { f:'🇵🇹', n:'Portugal', r:'europe', li:'Portugal', boards:[
+    { n:'Landing.jobs', u:'https://landing.jobs', t:['tech','visa'] },
+    { n:'ITJobs.pt', u:'https://www.itjobs.pt', t:['tech'] },
+    { n:'Indeed PT', u:'https://pt.indeed.com', t:['general'] } ]},
+  { f:'🇦🇹', n:'Austria', r:'europe', li:'Austria', boards:[
+    { n:'Karriere.at', u:'https://www.karriere.at', t:['general'] },
+    { n:'DevJobs.at', u:'https://devjobs.at', t:['tech'] },
+    { n:'Indeed AT', u:'https://at.indeed.com', t:['general'] } ]},
+  { f:'🇧🇪', n:'Belgium', r:'europe', li:'Belgium', boards:[
+    { n:'VDAB', u:'https://www.vdab.be', t:['official'] },
+    { n:'ICTjob.be', u:'https://www.ictjob.be', t:['tech'] },
+    { n:'Indeed BE', u:'https://be.indeed.com', t:['general'] } ]},
+  { f:'🇩🇰', n:'Denmark', r:'europe', li:'Denmark', boards:[
+    { n:'Work in Denmark', u:'https://www.workindenmark.dk', t:['official','visa'] },
+    { n:'Jobindex', u:'https://www.jobindex.dk', t:['general'] },
+    { n:'The Hub (Nordics)', u:'https://thehub.io', t:['tech'] } ]},
+  { f:'🇫🇮', n:'Finland', r:'europe', li:'Finland', boards:[
+    { n:'Job Market Finland', u:'https://tyomarkkinatori.fi', t:['official'] },
+    { n:'Duunitori', u:'https://duunitori.fi', t:['general'] },
+    { n:'The Hub (Nordics)', u:'https://thehub.io', t:['tech'] } ]},
+  { f:'🇳🇴', n:'Norway', r:'europe', li:'Norway', boards:[
+    { n:'Finn.no Jobs', u:'https://www.finn.no/job', t:['general'] },
+    { n:'NAV', u:'https://www.nav.no', t:['official'] },
+    { n:'The Hub (Nordics)', u:'https://thehub.io', t:['tech'] } ]},
+  { f:'🇨🇿', n:'Czechia', r:'europe', li:'Czechia', boards:[
+    { n:'Jobs.cz', u:'https://www.jobs.cz', t:['general'] },
+    { n:'StartupJobs.cz', u:'https://www.startupjobs.cz', t:['tech'] },
+    { n:'Prace.cz', u:'https://www.prace.cz', t:['general'] } ]},
+  { f:'🇪🇪', n:'Estonia', r:'europe', li:'Estonia', boards:[
+    { n:'Work in Estonia', u:'https://www.workinestonia.com', t:['official','visa'] },
+    { n:'CV.ee', u:'https://cv.ee', t:['general'] },
+    { n:'MeetFrank', u:'https://meetfrank.com', t:['tech'] } ]},
+  { f:'🇹🇷', n:'Turkey', r:'europe', li:'Turkey', boards:[
+    { n:'Kariyer.net', u:'https://www.kariyer.net', t:['general'] },
+    { n:'LinkedIn TR', u:'https://www.linkedin.com/jobs/', t:['general'] } ]},
+
+  /* ── ASIA ── */
+  { f:'🇮🇳', n:'India', r:'asia', li:'India', boards:[
+    { n:'Naukri', u:'https://www.naukri.com', t:['general'] },
+    { n:'Internshala', u:'https://internshala.com', t:['fresher'] },
+    { n:'Instahyre', u:'https://www.instahyre.com', t:['tech'] },
+    { n:'Cutshort', u:'https://cutshort.io', t:['tech'] },
+    { n:'Foundit', u:'https://www.foundit.in', t:['general'] },
+    { n:'Hirist', u:'https://www.hirist.tech', t:['tech'] } ]},
+  { f:'🇸🇬', n:'Singapore', r:'asia', li:'Singapore', boards:[
+    { n:'MyCareersFuture', u:'https://www.mycareersfuture.gov.sg', t:['official'] },
+    { n:'NodeFlair', u:'https://nodeflair.com', t:['tech'] },
+    { n:'JobStreet SG', u:'https://www.jobstreet.com.sg', t:['general'] },
+    { n:'Tech in Asia Jobs', u:'https://www.techinasia.com/jobs', t:['tech'] } ]},
+  { f:'🇯🇵', n:'Japan', r:'asia', li:'Japan', boards:[
+    { n:'Japan Dev', u:'https://japan-dev.com', t:['tech','visa'] },
+    { n:'TokyoDev', u:'https://www.tokyodev.com', t:['tech','visa'] },
+    { n:'Daijob', u:'https://www.daijob.com', t:['general','visa'] },
+    { n:'GaijinPot Jobs', u:'https://jobs.gaijinpot.com', t:['visa'] },
+    { n:'Wantedly', u:'https://www.wantedly.com', t:['tech'] } ]},
+  { f:'🇰🇷', n:'South Korea', r:'asia', li:'South Korea', boards:[
+    { n:'Wanted.co.kr', u:'https://www.wanted.co.kr', t:['tech'] },
+    { n:'Saramin', u:'https://www.saramin.co.kr', t:['general'] },
+    { n:'JobKorea', u:'https://www.jobkorea.co.kr', t:['general'] } ]},
+  { f:'🇨🇳', n:'China', r:'asia', li:'China', boards:[
+    { n:'BOSS Zhipin', u:'https://www.zhipin.com', t:['general'] },
+    { n:'51job', u:'https://www.51job.com', t:['general'] },
+    { n:'Zhaopin', u:'https://www.zhaopin.com', t:['general'] },
+    { n:'Liepin', u:'https://www.liepin.com', t:['general'] } ]},
+  { f:'🇭🇰', n:'Hong Kong', r:'asia', li:'Hong Kong', boards:[
+    { n:'JobsDB HK', u:'https://hk.jobsdb.com', t:['general'] },
+    { n:'CTgoodjobs', u:'https://www.ctgoodjobs.hk', t:['general'] } ]},
+  { f:'🇹🇼', n:'Taiwan', r:'asia', li:'Taiwan', boards:[
+    { n:'104 Job Bank', u:'https://www.104.com.tw', t:['general'] },
+    { n:'CakeResume', u:'https://www.cakeresume.com', t:['tech'] },
+    { n:'1111', u:'https://www.1111.com.tw', t:['general'] } ]},
+  { f:'🇲🇾', n:'Malaysia', r:'asia', li:'Malaysia', boards:[
+    { n:'JobStreet MY', u:'https://www.jobstreet.com.my', t:['general'] },
+    { n:'Hiredly', u:'https://www.hiredly.com', t:['tech'] } ]},
+  { f:'🇮🇩', n:'Indonesia', r:'asia', li:'Indonesia', boards:[
+    { n:'Glints', u:'https://glints.com', t:['fresher'] },
+    { n:'JobStreet ID', u:'https://www.jobstreet.co.id', t:['general'] },
+    { n:'Kalibrr', u:'https://www.kalibrr.com', t:['tech'] } ]},
+  { f:'🇻🇳', n:'Vietnam', r:'asia', li:'Vietnam', boards:[
+    { n:'ITviec', u:'https://itviec.com', t:['tech'] },
+    { n:'TopCV', u:'https://www.topcv.vn', t:['general'] },
+    { n:'VietnamWorks', u:'https://www.vietnamworks.com', t:['general'] } ]},
+  { f:'🇹🇭', n:'Thailand', r:'asia', li:'Thailand', boards:[
+    { n:'JobsDB TH', u:'https://th.jobsdb.com', t:['general'] },
+    { n:'JobThai', u:'https://www.jobthai.com', t:['general'] } ]},
+  { f:'🇵🇭', n:'Philippines', r:'asia', li:'Philippines', boards:[
+    { n:'JobStreet PH', u:'https://www.jobstreet.com.ph', t:['general'] },
+    { n:'Kalibrr', u:'https://www.kalibrr.com', t:['tech','fresher'] } ]},
+  { f:'🇧🇩', n:'Bangladesh', r:'asia', li:'Bangladesh', boards:[
+    { n:'Bdjobs', u:'https://www.bdjobs.com', t:['general'] },
+    { n:'LinkedIn BD', u:'https://www.linkedin.com/jobs/', t:['general'] } ]},
+  { f:'🇵🇰', n:'Pakistan', r:'asia', li:'Pakistan', boards:[
+    { n:'Rozee.pk', u:'https://www.rozee.pk', t:['general'] },
+    { n:'Mustakbil', u:'https://www.mustakbil.com', t:['general'] } ]},
+
+  /* ── MIDDLE EAST ── */
+  { f:'🇦🇪', n:'UAE', r:'mideast', li:'United Arab Emirates', boards:[
+    { n:'Bayt', u:'https://www.bayt.com', t:['general'] },
+    { n:'GulfTalent', u:'https://www.gulftalent.com', t:['general'] },
+    { n:'NaukriGulf', u:'https://www.naukrigulf.com', t:['general'] },
+    { n:'Indeed AE', u:'https://ae.indeed.com', t:['general'] } ]},
+  { f:'🇸🇦', n:'Saudi Arabia', r:'mideast', li:'Saudi Arabia', boards:[
+    { n:'Bayt', u:'https://www.bayt.com', t:['general'] },
+    { n:'GulfTalent', u:'https://www.gulftalent.com', t:['general'] } ]},
+  { f:'🇶🇦', n:'Qatar', r:'mideast', li:'Qatar', boards:[
+    { n:'Bayt', u:'https://www.bayt.com', t:['general'] },
+    { n:'GulfTalent', u:'https://www.gulftalent.com', t:['general'] } ]},
+  { f:'🇮🇱', n:'Israel', r:'mideast', li:'Israel', boards:[
+    { n:'AllJobs', u:'https://www.alljobs.co.il', t:['general'] },
+    { n:'Drushim', u:'https://www.drushim.co.il', t:['general'] },
+    { n:'JobMaster', u:'https://www.jobmaster.co.il', t:['general'] } ]},
+
+  /* ── AMERICAS ── */
+  { f:'🇺🇸', n:'USA', r:'americas', li:'United States', boards:[
+    { n:'Indeed US', u:'https://www.indeed.com', t:['general'] },
+    { n:'BuiltIn', u:'https://builtin.com', t:['tech'] },
+    { n:'Dice', u:'https://www.dice.com', t:['tech'] },
+    { n:'Wellfound', u:'https://wellfound.com', t:['tech'] },
+    { n:'Handshake (students)', u:'https://joinhandshake.com', t:['fresher'] },
+    { n:'ZipRecruiter', u:'https://www.ziprecruiter.com', t:['general'] } ]},
+  { f:'🇨🇦', n:'Canada', r:'americas', li:'Canada', boards:[
+    { n:'Job Bank', u:'https://www.jobbank.gc.ca', t:['official'] },
+    { n:'Indeed CA', u:'https://ca.indeed.com', t:['general'] },
+    { n:'Glassdoor CA', u:'https://www.glassdoor.ca', t:['general'] } ]},
+  { f:'🇧🇷', n:'Brazil', r:'americas', li:'Brazil', boards:[
+    { n:'Programathor', u:'https://programathor.com.br', t:['tech'] },
+    { n:'Catho', u:'https://www.catho.com.br', t:['general'] },
+    { n:'Vagas.com', u:'https://www.vagas.com.br', t:['general'] },
+    { n:'InfoJobs BR', u:'https://www.infojobs.com.br', t:['general'] } ]},
+  { f:'🇲🇽', n:'Mexico', r:'americas', li:'Mexico', boards:[
+    { n:'OCC Mundial', u:'https://www.occ.com.mx', t:['general'] },
+    { n:'Computrabajo MX', u:'https://www.computrabajo.com.mx', t:['general'] },
+    { n:'GetonBoard', u:'https://www.getonbrd.com', t:['tech'] } ]},
+  { f:'🇦🇷', n:'Argentina', r:'americas', li:'Argentina', boards:[
+    { n:'GetonBoard', u:'https://www.getonbrd.com', t:['tech'] },
+    { n:'Bumeran', u:'https://www.bumeran.com.ar', t:['general'] },
+    { n:'Computrabajo AR', u:'https://www.computrabajo.com.ar', t:['general'] } ]},
+  { f:'🇨🇱', n:'Chile', r:'americas', li:'Chile', boards:[
+    { n:'GetonBoard', u:'https://www.getonbrd.com', t:['tech'] },
+    { n:'Laborum', u:'https://www.laborum.cl', t:['general'] } ]},
+
+  /* ── AFRICA ── */
+  { f:'🇿🇦', n:'South Africa', r:'africa', li:'South Africa', boards:[
+    { n:'OfferZen', u:'https://www.offerzen.com', t:['tech'] },
+    { n:'PNet', u:'https://www.pnet.co.za', t:['general'] },
+    { n:'Careers24', u:'https://www.careers24.com', t:['general'] } ]},
+  { f:'🇪🇬', n:'Egypt', r:'africa', li:'Egypt', boards:[
+    { n:'Wuzzuf', u:'https://wuzzuf.net', t:['general','tech'] },
+    { n:'Bayt', u:'https://www.bayt.com', t:['general'] } ]},
+  { f:'🇳🇬', n:'Nigeria', r:'africa', li:'Nigeria', boards:[
+    { n:'Jobberman', u:'https://www.jobberman.com', t:['general'] },
+    { n:'MyJobMag', u:'https://www.myjobmag.com', t:['general'] } ]},
+
+  /* ── OCEANIA ── */
+  { f:'🇦🇺', n:'Australia', r:'oceania', li:'Australia', boards:[
+    { n:'Seek', u:'https://www.seek.com.au', t:['general'] },
+    { n:'GradConnection', u:'https://au.gradconnection.com', t:['fresher'] },
+    { n:'Indeed AU', u:'https://au.indeed.com', t:['general'] } ]},
+  { f:'🇳🇿', n:'New Zealand', r:'oceania', li:'New Zealand', boards:[
+    { n:'Seek NZ', u:'https://www.seek.co.nz', t:['general'] },
+    { n:'TradeMe Jobs', u:'https://www.trademe.co.nz/a/jobs', t:['general'] } ]}
+];
+
+/* 1-click LinkedIn searches: entry-level filter (f_E=1,2 = internship + entry) + country + role */
+const ROLES = [
+  ['ML Engineer', 'machine learning engineer'],
+  ['AI Engineer', 'AI engineer'],
+  ['Deep Learning', 'deep learning'],
+  ['RAG / LLM', 'LLM RAG engineer'],
+  ['Data Scientist', 'data scientist']
+];
+
+function liUrl(role, loc) {
+  return `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(role)}&location=${encodeURIComponent(loc)}&f_E=1%2C2&f_TPR=r2592000`;
+}
+
+const TAG_LABEL = { official: '🏛 official', tech: '⚡ tech', fresher: '🎓 fresher', visa: '✈ visa-info', general: 'general' };
+
+function boardHTML(b) {
+  const tags = b.t.map(t => `<span class="tag ${t}">${TAG_LABEL[t] || t}</span>`).join(' · ');
+  return `<a class="board-link" href="${b.u}" target="_blank" rel="noopener noreferrer">
+    <span class="bn">${b.n} ↗</span><span class="bt">${tags}</span></a>`;
+}
+
+/* render global boards */
+document.getElementById('globalBoards').innerHTML = GLOBAL_BOARDS.map(boardHTML).join('');
+
+/* render countries */
+const listEl = document.getElementById('countryList');
+function renderCountries() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  const region = document.querySelector('#regionChips .chip.active').dataset.r;
+
+  listEl.innerHTML = COUNTRIES
+    .filter(c => (!region || c.r === region) && (!q || c.n.toLowerCase().includes(q)))
+    .map(c => `
+      <details class="country">
+        <summary>
+          <span class="flag">${c.f}</span> ${c.n}
+          <span class="region-tag">${c.boards.length} boards</span>
+          <span class="arrow">›</span>
+        </summary>
+        <div class="country-body">
+          <div class="quick-row">
+            <div class="quick-label">⚡ 1-click LinkedIn searches (entry-level, last 30 days):</div>
+            ${ROLES.map(([label, kw]) =>
+              `<a class="quick-link" href="${liUrl(kw, c.li)}" target="_blank" rel="noopener noreferrer">${label}</a>`).join('')}
+          </div>
+          <div class="board-grid">${c.boards.map(boardHTML).join('')}</div>
+        </div>
+      </details>`).join('');
+}
+
+document.getElementById('searchInput').addEventListener('input', renderCountries);
+document.querySelectorAll('#regionChips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#regionChips .chip').forEach(x => x.classList.remove('active'));
+    chip.classList.add('active');
+    renderCountries();
+  });
+});
+
+renderCountries();
+</script>
+
+</body>
+</html>
